@@ -1,0 +1,29 @@
+<form (ngSubmit)="onSubmit()">
+  <label>Choose Your Fitness Goal:</label>
+  <div>
+    <input type="radio" id="muscleGain" [(ngModel)]="goal" name="goal" value="Muscle Gain">
+    <label for="muscleGain">Muscle Gain</label>
+
+    <input type="radio" id="fatLoss" [(ngModel)]="goal" name="goal" value="Fat Loss">
+    <label for="fatLoss">Fat Loss</label>
+
+    <input type="radio" id="strengthPower" [(ngModel)]="goal" name="goal" value="Strength and Power Enhancement">
+    <label for="strengthPower">Strength and Power Enhancement</label>
+
+    <input type="radio" id="cardioFitness" [(ngModel)]="goal" name="goal" value="Cardiovascular Fitness">
+    <label for="cardioFitness">Cardiovascular Fitness</label>
+
+    <input type="radio" id="flexibility" [(ngModel)]="goal" name="goal" value="Flexibility and Mobility">
+    <label for="flexibility">Flexibility and Mobility</label>
+  </div>
+
+  <label for="title">Give a title for your new program:</label>
+  <input type="text" id="title" [(ngModel)]="title" name="title" required>
+
+  <label for="description">Description:</label>
+  <textarea id="description" [(ngModel)]="description" name="description" rows="4"></textarea>
+
+  <p>{{ errorMessage }}</p>
+
+  <button type="submit">Create a New Program</button>
+</form>

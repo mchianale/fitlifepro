@@ -1,0 +1,89 @@
+<!-- add-exercise.component.html -->
+<!-- board content -->
+<h3>Selected Exercises</h3>
+<div class="selected-exercise-container">
+  <div class="board">
+  <div *ngFor="let selectedExercise of selectedExercises" class="selected-exercise-item">
+    <img [src]="selectedExercise.gifUrl" alt="{{ selectedExercise.name }}" (click)="navigateToExercise(selectedExercise.id)">
+    <div class="selected-exercise-info">
+      <div class="selected-exercise-name">{{ selectedExercise.name }}</div>
+    </div>
+    <button (click)="deleteFromBoard(selectedExercise)">Delete</button>
+  </div>
+</div>
+  <button *ngIf="selectedExercises.length > 0" (click)="validate()">Validate</button>
+</div>
+
+<!-- search content -->
+  <div class="search-bar">
+    <div class="search-inputs">
+      <div class="search-input">
+        <label for="exerciseName">Exercise Name:</label>
+        <input type="text" id="exerciseName" [(ngModel)]="searchName">
+      </div>
+
+      <div class="search-input">
+        <label for="bodyPart">Body Part:</label>
+        <select id="bodyPart" [(ngModel)]="searchBodyPart">
+          <option value="none" selected>None</option>
+          <option value="back">Back</option>
+          <option value="cardio">Cardio</option>
+          <option value="chest">Chest</option>
+          <option value="lower arms">Lower Arms</option>
+          <option value="lower legs">Lower Legs</option>
+          <option value="neck">Neck</option>
+          <option value="shoulders">Shoulders</option>
+          <option value="upper arms">Upper Arms</option>
+          <option value="upper legs">Upper Legs</option>
+          <option value="waist">Waist</option>
+        </select>
+      </div>
+      <div class="search-options">
+        <div class="search-input">
+          <label for="withEquipment">Without Equipment:</label>
+          <input type="checkbox" id="withEquipment" [(ngModel)]="withoutEquipment">
+        </div>
+      </div>
+      <div class="search-input">
+        <label>Muscles:</label>
+        <div class="muscles-container">
+          <div class="muscles-checkboxes">
+            <div *ngFor="let muscle of muscles.slice(0, muscles.length / 2)" class="muscle-checkbox">
+              <input type="checkbox" [(ngModel)]="selectedMuscles[muscle]" id="{{ muscle }}">
+              <label>{{ muscle }}</label>
+            </div>
+          </div>
+          <div class="muscles-checkboxes">
+            <div *ngFor="let muscle of muscles.slice(muscles.length / 2)" class="muscle-checkbox">
+              <input type="checkbox" [(ngModel)]="selectedMuscles[muscle]" id="{{ muscle }}">
+              <label>{{ muscle }}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+      <button (click)="applyFilters()">Apply Filters</button>
+      <button (click)="resetFilters()">Reset Filters</button>
+    </div>
+
+    <div class="exercise-container">
+      <div *ngFor="let exercise of exercises" class="exercise-item">
+        <img [src]="exercise.gifUrl" alt="{{ exercise.name }}" (click)="navigateToExercise(exercise.id)">
+        <div class="exercise-info">
+          <div class="exercise-name">{{ exercise.name }}</div>
+          <div class="target-box">
+            <div class="target">{{ exercise.target }}</div>
+            <div *ngFor="let secondary of exercise.secondaryMuscles" class="target">{{ secondary }}</div>
+          </div>
+          <div>
+            <button (click)="addToBoard(exercise)">Add</button> <!-- Add button for each exercise -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+<div class="pagination">
+  <button (click)="prevPage()" [disabled]="currentPage === 0">Previous Page</button>
+  <span>Page {{ currentPage + 1 }}</span>
+  <button (click)="nextPage()">Next Page</button>
+</div>

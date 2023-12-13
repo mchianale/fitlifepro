@@ -1,0 +1,32 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="javascript:void(0)">Navbar</a>
+
+  <!-- Left-aligned items -->
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/time-table">Home</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/exercises">Show Exercises</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/new-program">Create a New Program</a>
+    </li>
+  </ul>
+
+  <ul class="navbar-nav ml-auto">
+    <li ngbDropdown class="nav-item">
+      <a ngbDropdownToggle id="navbar2" class="nav-link dropdown-toggle" role="button">
+        User
+      </a>
+      <div ngbDropdownMenu aria-labelledby="navbar2" class="dropdown-menu">
+        <a class="dropdown-item" (click)="navigateToUserWithToken()">Information</a>
+        <button class="dropdown-item" (click)="onButtonClick()">Logout</button>
+      </div>
+    </li>
+  </ul>
+</nav>
+
+
+
+

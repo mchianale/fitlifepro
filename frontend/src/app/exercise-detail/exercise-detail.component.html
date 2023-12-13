@@ -1,0 +1,22 @@
+<div *ngIf="exercise">
+  <!-- Add a button to go back to the previous page -->
+  <button (click)="goBack()">Go Back</button>
+  <h2>{{ exercise.name }}</h2>
+  <div>
+    <img [src]="exercise.gifUrl" alt="{{ exercise.name }}">
+  </div>
+  <div>
+    <h4>Target: {{ exercise.target }}</h4>
+    <div *ngIf="exercise.secondaryMuscles && exercise.secondaryMuscles.length > 0">
+      <h4>Secondary Muscles:</h4>
+      <ul>
+        <li *ngFor="let secondary of exercise.secondaryMuscles">{{ secondary }}</li>
+      </ul>
+    </div>
+    <h4>Equipment: {{ exercise.equipment }}</h4>
+    <h4>Instructions:</h4>
+    <ul *ngIf="exercise.instructions && exercise.instructions.length > 0">
+      <li *ngFor="let instruction of exercise.instructions">{{ instruction }}</li>
+    </ul>
+  </div>
+</div>

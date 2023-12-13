@@ -1,0 +1,9 @@
+<div *ngIf="errorMessage">
+  <p>Error: {{ errorMessage }}</p>
+</div>
+
+<div *ngIf="userInformation">
+  <p>Name: {{ userInformation.lastname }}</p>
+  <p>Firstname: {{ userInformation.firstname }}</p>
+  <p>Email: {{ userInformation.mail }}</p>
+</div>
