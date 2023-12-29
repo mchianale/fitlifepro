@@ -1,0 +1,52 @@
+.session-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Adjust the gap between sessions as needed */
+}
+
+.session-item {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.session-info {
+  /* Add styles for session info container */
+}
+
+.session-name {
+  font-weight: bold;
+}
+
+.board {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.exercise-row {
+  display: flex;
+  flex-wrap: wrap; /* Allow items to wrap to the next row */
+  gap: 10px;
+}
+
+.exercise-item {
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+  flex: 0 0 calc(20% - 10px); /* 5 exercises per row with 10px gap between items */
+  margin-bottom: 10px; /* Adjust the margin between rows */
+  width: 100%; /* Ensure each exercise-item takes up the full width of its container */
+  max-width: calc(20% - 10px); /* Limit the maximum width to maintain the 5-item layout */
+  min-width: 100px; /* Set a minimum width for each exercise-item */
+}
+
+.exercise-item img {
+  width: 100%; /* Make the image take up the full width of its container */
+  height: auto; /* Maintain the aspect ratio */
+  object-fit: cover; /* Maintain aspect ratio while covering the container */
+  cursor: pointer;
+}
+

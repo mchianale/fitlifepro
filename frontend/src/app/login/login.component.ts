@@ -29,16 +29,13 @@ export class LoginComponent {
           this.router.navigate(['/']);
         },
         (error) => {
-
-          if (error.status === 401) {
-            this.errorMessage = 'Invalid password';
-          } else if (error.status === 404) {
-            this.errorMessage = 'User not found';
-          } else {
-            this.errorMessage = 'An unexpected error occurred';
-          }
+          this.errorMessage = error.error.message;
         }
       );
+  }
+
+  GoToSignUp() {
+    this.router.navigate(['register']);
   }
 }
 

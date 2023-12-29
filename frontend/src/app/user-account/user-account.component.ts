@@ -28,11 +28,11 @@ export class UserAccountComponent implements OnInit {
             this.userInformation = response;
           },
           (error) => {
-            this.errorMessage = 'Error';
+            this.errorMessage = error.error.message;
           }
         );
-    } else {
-      this.errorMessage = 'Invalid Access'
+    }else{
+      this.router.navigate(['/']);
     }
   }
 }

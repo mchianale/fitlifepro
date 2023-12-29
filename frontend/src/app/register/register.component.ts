@@ -32,23 +32,13 @@ export class RegisterComponent {
           this.router.navigate(['/']);
         },
         (error) => {
-          if (error.status === 401) {
-            this.errorMessage = `User already exists with mail: ${this.mail}`
-          }
-          else if (error.status === 404) {
-            this.errorMessage = 'please input a valid password, with at least 6 characters and at least one special charactere'
-          }
-          else if (error.status === 406) {
-            this.errorMessage =  'please input a valid firstname'
-          }
-          else if (error.status === 403) {
-            this.errorMessage = 'please input a valid lastname'
-          }
-          else {
-            this.errorMessage = "Din't manage to register a new account"
-          }
+          this.errorMessage = error.error.message;
         }
       );
+  }
+
+  GoToLogin() {
+    this.router.navigate(['login']);
   }
 }
 

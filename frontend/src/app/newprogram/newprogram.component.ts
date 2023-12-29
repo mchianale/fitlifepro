@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { NewprogramService} from "./newprogram.service";
 import { AuthService} from "../services/auth.service";
 import { Router} from "@angular/router";
@@ -9,7 +9,7 @@ import { Router} from "@angular/router";
   templateUrl: './newprogram.component.html',
   styleUrls: ['./newprogram.component.css']
 })
-export class NewprogramComponent {
+export class NewprogramComponent implements OnInit{
   title: string = '';
   goal: string= '';
   category: string= '';
@@ -17,6 +17,16 @@ export class NewprogramComponent {
   errorMessage: string | null = null;
 
   constructor(private newprogramService : NewprogramService, private authService: AuthService, private router: Router) {}
+
+  ngOnInit() {
+    //Avoid to go to this page without be log
+    const token = this.authService.getAuthToken();
+    if (token === null || token === '') {
+      this.router.navigate(['/']);
+    }
+
+  }
+
   onSubmit() {
     const token = this.authService.getAuthToken();
     console.log('Selected Goal:', this.goal);
@@ -26,19 +36,13 @@ export class NewprogramComponent {
       this.newprogramService.createNewProgram(token, this.title, this.goal, this.description)
         .subscribe(
           (response: any) => {
-
             const id_program = response.id
-            console.log(`succes create new program ${id_program}`)
+            console.log(`success create new program ${id_program}`)
             this.errorMessage = ''
             this.router.navigate(['/new-session', id_program]);
           },
           (error) => {
-            if (error.status === 401) {
-              this.errorMessage = `Please provided a title`
-            }
-            else {
-              this.errorMessage = 'Failed to create a new program'
-            }
+            this.errorMessage = error.error.message;
           })
     } else {
       this.errorMessage = 'Failed to load your session'

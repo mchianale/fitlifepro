@@ -1,3 +1,77 @@
-<div class="container">
-  <full-calendar [options]="calendarOptions"></full-calendar>
+
+<div id="main-container">
+  <div id="side-menu" [class.active]="showAddEventForm">
+
+      <h2>Add an Event</h2>
+        <form (ngSubmit)="addEvent()">
+          <label for="eventTitle">Event Title</label>
+          <input type="text" id="eventTitle" [(ngModel)]="newEventTitle" name="title" placeholder="Event Title" required>
+
+          <label for="eventStart">Start Date and Time</label>
+          <input type="datetime-local" id="eventStart" [(ngModel)]="newEventStart" name="start" required>
+
+          <label for="eventEnd">End Date and Time</label>
+          <input type="datetime-local" id="eventEnd" [(ngModel)]="newEventEnd" name="end" required>
+
+
+          <label for="secondaryColor">Event Color</label>
+          <input type="color" id="secondaryColor" [(ngModel)]="newSecondaryColor" name="secondaryColor" title="Choose your event color">
+
+          <label for="primaryColor">Border Color</label>
+          <input type="color" id="primaryColor" [(ngModel)]="newEventColor" name="color" title="Choose the border color of the event">
+
+          <label for="newTextColor">Title Color</label>
+          <input type="color" id="newTextColor" [(ngModel)]="newTextColor" name="newTextColor" title="Choose the color of the title">
+
+          <button type="submit">Add an Event</button>
+          <button type="button" (click)="toggleSidePanel()">Cancel</button>
+
+          <p>{{ errorMessage }}</p>
+        </form>
+
+    <div id="side-menu-toggle" (click)="toggleSidePanel()">
+      <span>&gt;</span>
+    </div>
+  </div>
+
+  <div id="calendar-container" >
+    <div id="cal-buttons">
+      <div id="cal-date-nav-buttons">
+        <button id="previous" mwlCalendarPreviousView [(viewDate)]="viewDate" [view]="view">Previous</button>
+        <button id="today" mwlCalendarToday [(viewDate)]="viewDate">Today</button>
+        <button id="next" mwlCalendarNextView [(viewDate)]="viewDate" [view]="view">Next</button>
+      </div>
+      <div id="Cal-date-field">{{ viewDate | calendarDate:(view + 'ViewTitle') : 'en'}}</div>
+      <div id="cal-view-nav-buttons">
+        <button id="week" (click)="setView(CalendarView.Week)">Week</button>
+        <button id="month" (click)="setView(CalendarView.Month)">Month</button>
+      </div>
+    </div>
+    <span [ngSwitch]="view" class="full-height-calendar">
+      <mwl-calendar-week-view
+        *ngSwitchCase="CalendarView.Week"
+        [viewDate]="viewDate"
+        [events]="events"
+        [refresh]="refresh"
+        (eventClicked)="eventClicked($event)"
+        (eventTimesChanged)="evenTimesChanged($event)"
+      >
+      </mwl-calendar-week-view>
+      <mwl-calendar-month-view
+        *ngSwitchCase="CalendarView.Month"
+        [viewDate]="viewDate"
+        [events]="events"
+        [refresh]="refresh"
+        (eventClicked)="eventClicked($event)"
+        (eventTimesChanged)="evenTimesChanged($event)">
+
+      </mwl-calendar-month-view>
+    </span>
+
+  </div>
 </div>
+
+
+
+
+

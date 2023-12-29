@@ -116,18 +116,48 @@ const Ex = sequelize.define('ex', {
     timestamps: false,
 });
 
+const Event_ = sequelize.define('event', {
+    title: {
+        type: DataTypes.STRING,
+        primaryKey: true,
+    },
+    start: {
+        type : DataTypes.DATE,
+        allowNull: false,
+    },
+    end: {
+    type : DataTypes.DATE,
+        allowNull: false,
+    },
+
+    primary: {
+        type: DataTypes.STRING,
+        allowNull: false,
+
+    },
+    secondary: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    secondaryText: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    }
+}, {timestamps: false});
 //Define all the relations
 // Define the association between LearningPackage and LearningFact with the relation 'fact_in_packages'
 User.hasMany(Program, { as: 'user_program', foreignKey: 'UserId' });
 Program.belongsTo(User, { foreignKey: 'UserId' });
 
-Program.hasMany(Session, { as: 'program_session', foreignKey: 'ProgramId' });
+Program.hasMany(Session, { as: 'program_session', foreignKey: 'ProgramId', onDelete: 'CASCADE' });
 Session.belongsTo(Program, { foreignKey: 'ProgramId' });
 
-Session.hasMany(Exercise, { as: 'session_exercise', foreignKey: 'SessionId' });
+Session.hasMany(Exercise, { as: 'session_exercise', foreignKey: 'SessionId', onDelete: 'CASCADE'});
 Exercise.belongsTo(Session, { foreignKey: 'SessionId' });
 
-Ex.hasMany(Exercise, { as: 'ex_exercise', foreignKey: 'ExId' });
+Ex.hasMany(Exercise, { as: 'ex_exercise', foreignKey: 'ExId',onDelete: 'CASCADE' });
 Exercise.belongsTo(Session, { foreignKey: 'ExId' });
 
-export  {User, Program, Session, Exercise, Ex}
+User.hasMany(Event_, { as: 'user_event', foreignKey: 'UserId', onDelete: 'CASCADE'  });
+Event_.belongsTo(User, { foreignKey: 'UserId' });
+export  {User, Program, Session, Exercise, Ex, Event_}

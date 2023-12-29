@@ -24,11 +24,11 @@ export class ExerciseListService {
         const exercises = response?.ExFiltered;
 
         if (Array.isArray(exercises)) {
-          return exercises.slice(startIndex, startIndex + pageSize);
+          return {exercises: exercises.slice(startIndex, startIndex + pageSize), full_size:  exercises.length} ;
         } else {
           // Handle the case where exercises is not an array
           console.error('Unexpected data format for exercises:', response);
-          return [];
+          return {exercises: [],full_size: 0};
         }
       })
     );

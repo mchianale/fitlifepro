@@ -19,6 +19,13 @@ import { NewSessionComponent } from './new-session/new-session.component';
 import { TimetableComponent } from './timetable/timetable.component';
 import { FullCalendarModule} from "@fullcalendar/angular";
 import { AddExerciseComponent} from "./add-exercise/add-exercise.component";
+import { ProgramComponent } from './program/program.component';
+import { SessionComponent } from './session/session.component';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { HomeContentComponent } from './home-content/home-content.component';
+
 
 @NgModule({
   declarations: [
@@ -34,6 +41,9 @@ import { AddExerciseComponent} from "./add-exercise/add-exercise.component";
     NewSessionComponent,
     TimetableComponent,
     AddExerciseComponent,
+    ProgramComponent,
+    SessionComponent,
+    HomeContentComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,7 +53,9 @@ import { AddExerciseComponent} from "./add-exercise/add-exercise.component";
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    FullCalendarModule
+    BrowserAnimationsModule,
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
+
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

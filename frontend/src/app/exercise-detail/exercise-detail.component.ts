@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ExerciseDetailService } from './exercise-detail.service';
 import { Location } from '@angular/common';
 
+
 @Component({
   selector: 'app-exercise-detail',
   templateUrl: './exercise-detail.component.html',
@@ -12,6 +13,7 @@ export class ExerciseDetailComponent implements OnInit {
   exercise: any = {}
 
   constructor(
+    private router : Router,
     private location: Location,
     private route: ActivatedRoute,
     private exerciseDetailService: ExerciseDetailService
@@ -27,6 +29,7 @@ export class ExerciseDetailComponent implements OnInit {
         },
         error => {
           console.error(`Exercise doesn't exist: ${exerciseId}`, error);
+          this.router.navigate(['/']);
         }
       );
     });

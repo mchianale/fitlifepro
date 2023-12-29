@@ -48,6 +48,7 @@ export class AddExerciseComponent implements OnInit {
   exercises: any[] = [];
   currentPage: number = 0;
   pageSize: number = 20;
+  full_size = 0
 
   id_session = ''
   selectedExercises: any[] = []
@@ -60,6 +61,10 @@ export class AddExerciseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const token = this.authService.getAuthToken();
+    if (token === null || token === '') {
+      this.router.navigate(['/']);
+    }
     //Reload Saved Filters
     const savedSearch = this.saveSearchService.getSavedSearch();
     this.searchName = savedSearch.searchName;
@@ -70,10 +75,17 @@ export class AddExerciseComponent implements OnInit {
     this.getExercisesForPage(this.currentPage);
     this.route.params.subscribe(params => {
       this.id_session = params['id_session'];
-      console.log('Session id:', this.id_session);
     });
+    //If you update an older session and not a new, eed to reload its existing exercises
+   this.addExerciseService.getExercisesForSession(this.id_session)
+      .subscribe((data: any) => {
+        const exes = data.exes;
+        if(exes !== null && exes.length !== 0){
+          this.selectedExercises = exes;
+        }
+      });
     //Reload stored exercises selected, avoid to delete them when you click to see more information about an exercise
-    if (!this.saveExercisesService.isSaveExercisesEmpty()) {
+    if (this.selectedExercises.length === 0 && !this.saveExercisesService.isSaveExercisesEmpty()) {
       this.selectedExercises = this.saveExercisesService.getSaveExercises();
     }
   }
@@ -90,20 +102,22 @@ export class AddExerciseComponent implements OnInit {
 
   getExercisesForPage(page: number): void {
     this.addExerciseService.getExercisesForPage(page, this.pageSize, this.searchName, this.searchBodyPart, this.withoutEquipment, this.selectedMuscles)
-      .subscribe((data: any[]) => {
-        this.exercises = data;
+      .subscribe((data) => {
+        this.exercises = data.exercises;
+        this.full_size = data.full_size;
       });
   }
 
   applyFilters(): void {
     this.saveSearch();
     this.addExerciseService.getExercisesForPage(0, this.pageSize, this.searchName, this.searchBodyPart, this.withoutEquipment, this.selectedMuscles)
-      .subscribe((data: any[]) => {
-        this.exercises = data;
+      .subscribe((data) => {
+        this.exercises = data.exercises;
+        this.full_size = data.full_size;
       });
     this.saveSearch();
     this.currentPage = 0;
-    this.router.navigate(['/add-exercise', this.id_session]);
+    this.router.navigate(['/update-session', this.id_session]);
   }
 
   resetFilters(): void {
@@ -113,15 +127,19 @@ export class AddExerciseComponent implements OnInit {
     this.selectedMuscles = {};
     this.saveSearch();
     this.addExerciseService.getExercisesForPage(this.currentPage, this.pageSize, this.searchName, this.searchBodyPart, this.withoutEquipment, this.selectedMuscles)
-      .subscribe((data: any[]) => {
-        this.exercises = data;
+      .subscribe((data) => {
+        this.exercises = data.exercises;
+        this.full_size = data.full_size;
       });
     this.currentPage = 0;
-    this.router.navigate(['/add-exercise', this.id_session]);
+    this.router.navigate(['/update-session', this.id_session]);
   }
 
-  filterByMuscles(secondaryMuscles: string[]): boolean {
-    return Object.keys(this.selectedMuscles).every(muscle => !this.selectedMuscles[muscle] || secondaryMuscles.includes(muscle));
+  hasMorePages(): boolean {
+    // Calculate the total number of pages
+    const totalPages = Math.ceil(this.full_size / this.pageSize);
+    // Check if there are more pages
+    return this.currentPage < totalPages - 1;
   }
 
   navigateToExercise(exerciseId: string): void {
@@ -160,16 +178,11 @@ export class AddExerciseComponent implements OnInit {
       this.addExerciseService.postExercisesToSession(this.selectedExercises, this.id_session)
         .subscribe(
         (response: any) => {
-          console.log(response.id)
-          this.router.navigate(['/add-exercise', response.id]);
+          console.log(response.Programid)
+          this.router.navigate(['manage_program', response.ProgramId]);
         },
         (error) => {
-          if (error.status === 404) {
-            this.errorMessage = `Please be connect`
-          }
-          else {
-            this.errorMessage = `Failed to update session`
-          }
+          this.errorMessage = error.error.message;
         }
       );
     }

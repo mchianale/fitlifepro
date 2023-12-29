@@ -14,7 +14,14 @@ export class PrivateHomeComponent implements OnInit{
   }
 
   ngOnInit() {
-    this.router.navigate(['/time-table']);
+    const token = this.authService.getAuthToken();
+    if (token === null || token === '') {
+      this.router.navigate(['/']);
+    }
+    else{
+      this.router.navigate(['/time-table']);
+    }
+
   }
 
   navigateToUserWithToken(): void {

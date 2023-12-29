@@ -1,0 +1,179 @@
+body {
+  background: linear-gradient(to bottom, rgba(255, 0, 0, 0.2), rgba(255, 0, 0, 0.5));
+  margin: 0; /* Remove default margin */
+}
+
+#main-container {
+  display: flex;
+  min-height: 100vh; /* Full height of the viewport */
+}
+
+#side-menu {
+  background: linear-gradient(to right bottom, rgba(255, 0, 0, 0.8), rgba(255, 0, 0, 0.7),rgba(255, 0, 0, 0.6), rgba(255, 0, 0, 0.5));
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+  width: 300px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  transform: translateX(100%); /* Hide by default */
+  transition: transform 0.3s ease-in-out;
+  z-index: 1000;
+}
+
+#side-menu.active {
+  transform: translateX(0); /* Slide in */
+}
+
+#side-menu-toggle {
+  position: absolute;
+  left: -50px; /* Adjust as needed */
+  top: 50%;
+  transform: translateY(-50%) rotate(180deg); /* Rotate arrow when menu is closed */
+  background: linear-gradient(to right bottom, rgba(255, 0, 0, 0.8), rgba(255, 0, 0, 0.7),rgba(255, 0, 0, 0.6), rgba(255, 0, 0, 0.5));
+  color: white;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+#side-menu.active #side-menu-toggle {
+  transform: translateY(-50%) rotate(0deg); /* Arrow points the other way when menu is open */
+}
+
+#calendar-container {
+  flex-grow: 1;
+  transition: margin-right 0.3s;
+  /*background: linear-gradient(
+    #333333,
+    #4d4d4d,
+    #666666,
+    #808080
+  );*/
+}
+
+#side-menu.active ~ #calendar-container {
+  margin-right: 300px; /* Adjust content when menu is active */
+}
+
+/* Additional styles for the form within the side menu */
+#side-menu {
+  background: linear-gradient(to right bottom, rgba(255, 0, 0, 0.8), rgba(255, 0, 0, 0.7),rgba(255, 0, 0, 0.6), rgba(255, 0, 0, 0.5));
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  color: white;
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  max-width: 300px;
+
+}
+
+#side-menu h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+#side-menu form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#side-menu label {
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+#side-menu input[type=text],
+#side-menu input[type=datetime-local],
+#side-menu input[type=color],
+#side-menu button {
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+#side-menu input[type=text]::placeholder,
+#side-menu input[type=datetime-local]::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+#side-menu input[type=color] {
+  padding: 0;
+  border: none;
+  cursor: pointer;
+}
+
+#side-menu button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+}
+
+#side-menu button:hover {
+  opacity: 0.4;
+}
+
+#cal-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px; /* Adjust padding as necessary */
+  width: 95%; /* Ensure the navbar takes full width */
+
+}
+#cal-buttons button {
+  background-color: #dc3545;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  color: white;
+}
+/* Group for the navigation buttons */
+#cal-date-nav-buttons {
+  flex: 1; /* Allows the button group to grow and occupy available space */
+  display: flex;
+  justify-content: flex-start; /* Aligns buttons to the start of the flex container */
+
+}
+
+/* Date field styling */
+#Cal-date-field {
+  flex: 0 1 auto; /* The date field should not grow but can shrink if necessary */
+  text-align: center; /* Center the text inside the date field */
+  padding: 0 20px; /* Add some padding around the text */
+}
+
+/* Group for the view buttons */
+#cal-view-nav-buttons {
+  flex: 1; /* Allows the button group to grow and occupy available space */
+  display: flex;
+  justify-content: flex-end; /* Aligns buttons to the end of the flex container */
+}
+
+/* Button styling */
+#cal-buttons button {
+  margin: 0 5px; /* Add margin for spacing between buttons */
+  /* Add other styling for buttons here */
+}
+
+#calendar-container {
+  flex-grow: 1;
+  padding-top: 20px; /* Add space at the top inside the calendar container */
+}
+
+/* Style for delete button inside events */
+.fa-times {
+  color: red;
+  cursor: pointer;
+}
+

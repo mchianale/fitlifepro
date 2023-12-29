@@ -1,0 +1,24 @@
+<!-- program.component.html -->
+<div class="program-container">
+  <div *ngFor="let program of programs" class="program-item">
+    <div class="program-info">
+      <div class="program-name">{{program.title}}</div>
+      <div class="program-goal">{{program.goal}}</div>
+    </div>
+    <button (click)="UpdateProgram(program)">Update</button>
+    <button (click)="DeleteProgram(program)">Delete</button>
+  </div>
+</div>
+
+<div *ngIf="programs && programs.length > 0">
+  <div class="pagination">
+    <button (click)="prevPage()" [disabled]="currentPage === 0">Previous Page</button>
+    <span>Page {{ currentPage + 1 }}</span>
+    <button *ngIf="hasMorePages()" (click)="nextPage()">Next Page</button>
+  </div>
+</div>
+
+<!-- Show a center button when there are no programs -->
+<div *ngIf="!programs || programs.length === 0">
+  <button class="center-button" (click)="CreateNewProgram()">Add a new Program</button>
+</div>

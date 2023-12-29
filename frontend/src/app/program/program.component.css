@@ -1,0 +1,30 @@
+.program-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Adjust the gap as needed */
+}
+
+.program-item {
+  width: calc(33.33% - 20px); /* 3 programs per row with 20px gap between items */
+  box-sizing: border-box;
+  border: 1px solid #ccc; /* Optional border for each program card */
+  padding: 10px;
+  margin-bottom: 20px; /* Adjust the margin-bottom as needed */
+}
+
+.program-info {
+  /* Add styles for program info container */
+}
+
+.program-name {
+  font-weight: bold; /* Optional: Make program name bold */
+}
+
+.program-goal {
+  /* Add styles for program goal */
+}
+
+/* Adjust button styles as needed */
+button {
+  margin-top: 10px; /* Optional margin for buttons */
+}

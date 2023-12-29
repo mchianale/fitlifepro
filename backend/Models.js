@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Ex = exports.Exercise = exports.Session = exports.Program = exports.User = void 0;
+exports.Event_ = exports.Ex = exports.Exercise = exports.Session = exports.Program = exports.User = void 0;
 const sequelize_1 = require("sequelize");
 const sequelize = require('./sequelize-config.ts');
 //User
@@ -117,14 +117,43 @@ const Ex = sequelize.define('ex', {
     timestamps: false,
 });
 exports.Ex = Ex;
+const Event_ = sequelize.define('event', {
+    title: {
+        type: sequelize_1.DataTypes.STRING,
+        primaryKey: true,
+    },
+    start: {
+        type: sequelize_1.DataTypes.DATE,
+        allowNull: false,
+    },
+    end: {
+        type: sequelize_1.DataTypes.DATE,
+        allowNull: false,
+    },
+    primary: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false,
+    },
+    secondary: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false,
+    },
+    secondaryText: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false,
+    }
+}, { timestamps: false });
+exports.Event_ = Event_;
 //Define all the relations
 // Define the association between LearningPackage and LearningFact with the relation 'fact_in_packages'
 User.hasMany(Program, { as: 'user_program', foreignKey: 'UserId' });
 Program.belongsTo(User, { foreignKey: 'UserId' });
-Program.hasMany(Session, { as: 'program_session', foreignKey: 'ProgramId' });
+Program.hasMany(Session, { as: 'program_session', foreignKey: 'ProgramId', onDelete: 'CASCADE' });
 Session.belongsTo(Program, { foreignKey: 'ProgramId' });
-Session.hasMany(Exercise, { as: 'session_exercise', foreignKey: 'SessionId' });
+Session.hasMany(Exercise, { as: 'session_exercise', foreignKey: 'SessionId', onDelete: 'CASCADE' });
 Exercise.belongsTo(Session, { foreignKey: 'SessionId' });
-Ex.hasMany(Exercise, { as: 'ex_exercise', foreignKey: 'ExId' });
+Ex.hasMany(Exercise, { as: 'ex_exercise', foreignKey: 'ExId', onDelete: 'CASCADE' });
 Exercise.belongsTo(Session, { foreignKey: 'ExId' });
+User.hasMany(Event_, { as: 'user_event', foreignKey: 'UserId', onDelete: 'CASCADE' });
+Event_.belongsTo(User, { foreignKey: 'UserId' });
 //# sourceMappingURL=Models.js.map

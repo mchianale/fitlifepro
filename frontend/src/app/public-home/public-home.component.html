@@ -1,11 +1,15 @@
 <!-- your-component.component.html -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="javascript:void(0)">Navbar</a>
+
+
+<nav class="navbar navbar-expand-lg navbar-custom">
+  <a class="navbar-brand" routerLink="/public-home">
+    <img src="assets/fitlife-logo.png" alt="FitLife Logo" style="height: 30px;">
+  </a>
 
   <!-- Left-aligned items -->
   <ul class="navbar-nav mr-auto">
     <li class="nav-item">
-      <a class="nav-link" routerLink="/">Home</a>
+      <a class="nav-link" routerLink="/public-home">Home</a>
     </li>
   </ul>
   <ul class="navbar-nav mr-auto">
@@ -20,7 +24,7 @@
     </li>
     <!-- Add space between items -->
     <li class="nav-item" style="margin-left: 10px;">
-      <a class="dropdown-item" routerLink="/register">Register</a>
+      <a class="dropdown-item" routerLink="/register">Sign Up</a>
     </li>
   </ul>
 </nav>

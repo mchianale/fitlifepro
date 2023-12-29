@@ -12,7 +12,9 @@ import { NewprogramComponent} from "./newprogram/newprogram.component";
 import { NewSessionComponent} from "./new-session/new-session.component";
 import { TimetableComponent} from "./timetable/timetable.component";
 import { AddExerciseComponent} from "./add-exercise/add-exercise.component";
-
+import { ProgramComponent} from "./program/program.component";
+import  {SessionComponent} from "./session/session.component";
+import {HomeContentComponent} from "./home-content/home-content.component"
 const routes: Routes = [
   { path: 'public', component: PublicHomeComponent},
   { path : 'private', component: PrivateHomeComponent},
@@ -24,7 +26,10 @@ const routes: Routes = [
   { path: 'new-program', component: NewprogramComponent},
   { path: 'new-session/:id_program', component: NewSessionComponent},
   {path: 'time-table', component: TimetableComponent},
-  {path: 'add-exercise/:id_session', component: AddExerciseComponent}
+  {path: 'update-session/:id_session', component: AddExerciseComponent},
+  {path: 'my_programs', component: ProgramComponent},
+  {path: 'manage_program/:id_program', component : SessionComponent},
+  {path: 'public-home', component: HomeContentComponent}
 ];
 @NgModule({
   declarations: [],

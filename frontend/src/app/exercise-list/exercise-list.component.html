@@ -67,8 +67,13 @@
   </div>
 </div>
 
-<div class="pagination">
+<div *ngIf="exercises && exercises.length !== 0" class="pagination">
   <button (click)="prevPage()" [disabled]="currentPage === 0">Previous Page</button>
   <span>Page {{ currentPage + 1 }}</span>
-  <button (click)="nextPage()">Next Page</button>
+  <button *ngIf="hasMorePages()" (click)="nextPage()">Next Page</button>
+</div>
+
+<!-- Show if there are no exercise for applied filters -->
+<div *ngIf="!exercises || exercises.length === 0" class="no-results">
+  <p>No exercises match the filters</p>
 </div>

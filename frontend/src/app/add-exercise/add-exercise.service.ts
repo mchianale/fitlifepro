@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -22,11 +23,11 @@ export class AddExerciseService {
         const exercises = response?.ExFiltered;
 
         if (Array.isArray(exercises)) {
-          return exercises.slice(startIndex, startIndex + pageSize);
+          return {exercises: exercises.slice(startIndex, startIndex + pageSize), full_size:  exercises.length} ;
         } else {
           // Handle the case where exercises is not an array
           console.error('Unexpected data format for exercises:', response);
-          return [];
+          return {exercises: [],full_size: 0};
         }
       })
     );
@@ -38,4 +39,9 @@ export class AddExerciseService {
     }
     return this.http.post(`http://localhost:3000/api/update_session/${id_session}`, body);
   }
+
+  getExercisesForSession(id_session : string): Observable<any>{
+    return this.http.get(`http://localhost:3000/api/exercise_of_session/${id_session}`);
+  }
+
 }

@@ -45,7 +45,7 @@ export class ExerciseListComponent implements OnInit {
   exercises: any[] = [];
   currentPage: number = 0;
   pageSize: number = 20;
-
+  full_size = 0
   constructor(private exerciseListService: ExerciseListService, private router : Router,
               private saveSearchService : SaveSearchService) { }
 
@@ -68,14 +68,16 @@ export class ExerciseListComponent implements OnInit {
   }
   getExercisesForPage(page: number): void {
     this.exerciseListService.getExercisesForPage(page, this.pageSize, this.searchName,this.searchBodyPart, this.withoutEquipment, this.selectedMuscles)
-      .subscribe((data: any[]) => {
-        this.exercises = data;
+      .subscribe((data) => {
+        this.exercises = data.exercises;
+        this.full_size = data.full_size;
       });
   }
   applyFilters(): void {
     this.exerciseListService.getExercisesForPage(0, this.pageSize, this.searchName,this.searchBodyPart, this.withoutEquipment, this.selectedMuscles)
-      .subscribe((data: any[]) => {
-        this.exercises = data;
+      .subscribe((data) => {
+        this.exercises = data.exercises;
+        this.full_size = data.full_size;
       });
     this.saveSearch();
     this.currentPage = 0;
@@ -89,8 +91,9 @@ export class ExerciseListComponent implements OnInit {
     this.selectedMuscles= {};
     this.saveSearch();
     this.exerciseListService.getExercisesForPage(0, this.pageSize, this.searchName,this.searchBodyPart, this.withoutEquipment, this.selectedMuscles)
-      .subscribe((data: any[]) => {
-        this.exercises = data;
+      .subscribe((data) => {
+        this.exercises = data.exercises;
+        this.full_size = data.full_size;
       });
     this.currentPage = 0;
     this.router.navigate(['/exercises']);
@@ -101,7 +104,12 @@ export class ExerciseListComponent implements OnInit {
   navigateToExercise(exerciseId: string): void {
     this.router.navigate(['/exercises', exerciseId]);
   }
-
+  hasMorePages(): boolean {
+    // Calculate the total number of pages
+    const totalPages = Math.ceil(this.full_size/ this.pageSize);
+    // Check if there are more pages
+    return this.currentPage < totalPages - 1;
+  }
   prevPage(): void {
     if (this.currentPage > 0) {
       this.currentPage--;

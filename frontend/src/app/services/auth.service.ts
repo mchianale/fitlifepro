@@ -19,8 +19,7 @@ export class AuthService {
     localStorage.removeItem(this.tokenKey);
   }
   isAuthenticated(): boolean {
-    // Implement logic to check if the user is authenticated
-    // For example, check the presence of a valid token
+
     const token = localStorage.getItem('auth_token');
     return token !== '' && token !== null;
   }

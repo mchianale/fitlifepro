@@ -1,0 +1,53 @@
+<div>
+  <button class="center-button" (click)="GoBack()">Back</button>
+</div>
+<div class="program-item">
+  <div class="program-info">
+    <div class="program-name">Program Name: {{current_program.title}}</div>
+    <div class="program-goal">Goal: {{current_program.goal}}</div>
+    <div *ngIf="current_program.description !== ''">{{current_program.description}}</div>
+  </div>
+</div>
+
+<div>
+  <button class="center-button" (click)="CreateNewSession()">Create a new Training Session !</button>
+</div>
+
+
+
+<div class="session-container">
+  <div *ngFor="let session of sessions" class="session-item">
+    <div class="session-info">
+      <div class="session-name">{{ session.title }}</div>
+    </div>
+    <div class="board">
+      <div *ngIf="exercises_per_session.length > 0; else noExercises">
+        <div class="exercise-row">
+          <div *ngFor="let exercise of exercises_per_session[sessions.indexOf(session)]" class="exercise-item">
+            <img [src]="exercise.gifUrl" alt="{{ exercise.name }}" (click)="navigateToExercise(exercise.id)">
+            <div class="exercise-info">
+              <div class="exercise-name">{{ exercise.name }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ng-template #noExercises>
+        <p>No exercises for this session.</p>
+      </ng-template>
+    </div>
+    <button (click)="UpdateSession(session)">Update</button>
+    <button (click)="DeleteSession(session)">Delete</button>
+  </div>
+</div>
+
+
+
+<div *ngIf="sessions && sessions.length > 0">
+  <div class="pagination">
+    <button (click)="prevPage()" [disabled]="currentPage === 0">Previous Page</button>
+    <span>Page {{ currentPage + 1 }}</span>
+    <button *ngIf="hasMorePages()" (click)="nextPage()">Next Page</button>
+  </div>
+</div>
+
+
